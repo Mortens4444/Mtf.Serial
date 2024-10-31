@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35417.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mtf.Serial", "Mtf.Serial\Mtf.Serial.csproj", "{0D1F7082-9FBC-4DEB-BB5A-4BF025E5619A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mtf.Seral.Test", "Mtf.Seral.Test\Mtf.Seral.Test.csproj", "{891499CF-576F-4E22-BDA7-55E8766FE9EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mtf.Serial.UnitTests", "Mtf.Serial.UnitTests\Mtf.Serial.UnitTests.csproj", "{6A6B3F21-5995-4E0C-91E3-1F3B1C3126C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D1F7082-9FBC-4DEB-BB5A-4BF025E5619A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D1F7082-9FBC-4DEB-BB5A-4BF025E5619A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D1F7082-9FBC-4DEB-BB5A-4BF025E5619A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D1F7082-9FBC-4DEB-BB5A-4BF025E5619A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{891499CF-576F-4E22-BDA7-55E8766FE9EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{891499CF-576F-4E22-BDA7-55E8766FE9EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{891499CF-576F-4E22-BDA7-55E8766FE9EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{891499CF-576F-4E22-BDA7-55E8766FE9EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6B3F21-5995-4E0C-91E3-1F3B1C3126C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6B3F21-5995-4E0C-91E3-1F3B1C3126C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6B3F21-5995-4E0C-91E3-1F3B1C3126C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6B3F21-5995-4E0C-91E3-1F3B1C3126C4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
