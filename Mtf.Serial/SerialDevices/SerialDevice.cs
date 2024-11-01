@@ -50,6 +50,8 @@ namespace Mtf.Serial.SerialDevices
 
         public string PortName { get; private set; }
 
+        public int BytesToRead => comPort.IsOpen ? comPort.BytesToRead : 0;
+
         ~SerialDevice()
         {
             Dispose(false);
@@ -163,41 +165,46 @@ namespace Mtf.Serial.SerialDevices
 
         public Task WriteAsync(string message)
         {
-            return Task.Run(() => Write(message, Encoding));
+            return WriteAsync(message, Encoding);
         }
 
-        public void Write(string message, Encoding encoding)
+        public byte[] GetBytes(string message, Encoding encoding)
         {
             ValidateEncoding(encoding);
 
             var bytes = encoding.GetBytes(message);
 
             var extraBytes = (AppendCarriageReturn ? 1 : 0) + (AppendLineFeed ? 1 : 0);
-            if (extraBytes > 0)
+            if (extraBytes == 0)
             {
-                var extendedBytes = new byte[bytes.Length + extraBytes];
-                Buffer.BlockCopy(bytes, Constants.DefaultBufferStartIndex, extendedBytes, Constants.DefaultBufferStartIndex, bytes.Length);
+                return bytes;
+            }
 
-                var index = bytes.Length;
-                if (AppendCarriageReturn)
-                {
-                    extendedBytes[index++] = Constants.CarriageReturn;
-                }
-                if (AppendLineFeed)
-                {
-                    extendedBytes[index] = Constants.LineFeed;
-                }
-                Write(extendedBytes, Constants.DefaultBufferStartIndex, extendedBytes.Length);
-            }
-            else
+            var extendedBytes = new byte[bytes.Length + extraBytes];
+            Buffer.BlockCopy(bytes, Constants.DefaultBufferStartIndex, extendedBytes, Constants.DefaultBufferStartIndex, bytes.Length);
+
+            var index = bytes.Length;
+            if (AppendCarriageReturn)
             {
-                Write(bytes, Constants.DefaultBufferStartIndex, bytes.Length);
+                extendedBytes[index++] = Constants.CarriageReturn;
             }
+            if (AppendLineFeed)
+            {
+                extendedBytes[index] = Constants.LineFeed;
+            }
+            return extendedBytes;
+        }
+
+        public void Write(string message, Encoding encoding)
+        {
+            var bytes = GetBytes(message, encoding);
+            Write(bytes, Constants.DefaultBufferStartIndex, bytes.Length);
         }
 
         public Task WriteAsync(string message, Encoding encoding)
         {
-            return Task.Run(() => Write(message, encoding));
+            var bytes = GetBytes(message, encoding);
+            return WriteAsync(bytes, Constants.DefaultBufferStartIndex, bytes.Length);
         }
 
         public void Write(byte[] buffer, int offset, int count)
@@ -207,7 +214,7 @@ namespace Mtf.Serial.SerialDevices
 
         public Task WriteAsync(byte[] buffer, int offset, int count)
         {
-            return Task.Run(() => Write(buffer, offset, count));
+            return comPort.BaseStream.WriteAsync(buffer, offset, count);
         }
 
         public override bool Equals(object obj)

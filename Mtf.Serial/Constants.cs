@@ -2,6 +2,8 @@
 {
     public static class Constants
     {
+        public const int NotFound = -1;
+
         public const int DefaultBufferStartIndex = 0;
 
         public const int BufferSize = 1024;

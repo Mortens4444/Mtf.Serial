@@ -6,7 +6,7 @@ using System.Text;
 namespace Mtf.Serial.SerialDevices
 {
     /// <summary>
-    /// Silicon Labs CP210x USB to UART Bridge
+    /// Silicon Labs CP210x USB to UART Bridge - https://www.cartft.com/catalog/il/1132
     /// </summary>
     public class CarTft : SerialDevice
     {
