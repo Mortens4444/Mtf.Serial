@@ -7,3 +7,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0022:Use block body for method")]
 [assembly: SuppressMessage("Maintainability", "CA1510:Use ArgumentNullException throw helper")]
+[assembly: SuppressMessage("Style", "IDE0090:Use 'new(...)'")]

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Mtf.Serial</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>
       Serial Port Devices.
       
@@ -28,9 +28,18 @@
 	<tags>LuminaryMicroIcdiComPort ConradRelayCard SltWatchdog CarTft StretchUart Pelco KBD300A</tags>
 	<readme>docs\ReadMe.md</readme>
     <dependencies>
-      <group targetFramework="net481" />
-      <group targetFramework="net8.0-windows7" />
-      <group targetFramework="net9.0-windows7" />
+	  <group targetFramework="net481">
+		<dependency id="Mtf.Wmi" version="1.0.4" />
+		<dependency id="Microsoft.Extensions.Logging.Abstractions" version="4.8.0" />
+	  </group>
+	  <group targetFramework="net8.0-windows7">
+		<dependency id="Mtf.Wmi" version="1.0.4" />
+		<dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.2" />
+	  </group>
+	  <group targetFramework="net9.0-windows7">
+		<dependency id="Mtf.Wmi" version="1.0.4" />
+		<dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.2" />
+	  </group>
     </dependencies>
   </metadata>
   <files>

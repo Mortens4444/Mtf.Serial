@@ -10,7 +10,7 @@ namespace Mtf.Serial.Services
     {
         public static IEnumerable<SerialDeviceProperties> GetSerialDevices()
         {
-            var comPorts = Wmi.WmiGetObjects("SELECT Availability, Caption, ClassGuid, CompatibleID, ConfigManagerErrorCode, ConfigManagerUserConfig, CreationClassName, Description, DeviceID, ErrorCleared, ErrorDescription, HardwareID, InstallDate, LastErrorCode, Manufacturer, Name, PNPClass, PNPDeviceID, PowerManagementCapabilities, PowerManagementSupported, Present, Service, Status, StatusInfo, SystemCreationClassName, SystemName FROM Win32_PnPEntity WHERE Name LIKE '% (COM%' AND Status = 'OK'", "cimv2");
+            var comPorts = Wmi.GetObjects("SELECT Availability, Caption, ClassGuid, CompatibleID, ConfigManagerErrorCode, ConfigManagerUserConfig, CreationClassName, Description, DeviceID, ErrorCleared, ErrorDescription, HardwareID, InstallDate, LastErrorCode, Manufacturer, Name, PNPClass, PNPDeviceID, PowerManagementCapabilities, PowerManagementSupported, Present, Service, Status, StatusInfo, SystemCreationClassName, SystemName FROM Win32_PnPEntity WHERE Name LIKE '% (COM%' AND Status = 'OK'", "cimv2");
             return comPorts.Select(comPort => comPort.ToList()).Select(port =>
                 new SerialDeviceProperties
                 {

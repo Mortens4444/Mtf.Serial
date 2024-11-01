@@ -19,10 +19,13 @@ foreach (var device in SerialPort.GetPortNames())
     Console.WriteLine(device);
 }
 
-var lego = new LegoMindstormsEv3("COM7")
-{
-    OutputPort = OutputPort.BC // Motors
-};
-lego.SetMotorSpeed(50);
-Thread.Sleep(3000);
-lego.StopMotor();
+//var lego = new LegoMindstormsEv3("COM8")
+//{
+//    LeftMotor = OutputPort.B,
+//    RightMotor = OutputPort.C
+//};
+//lego.Connect();
+//lego.TurnLeft(50);
+//Thread.Sleep(3000);
+//lego.Stop();
+//lego.Disconnect();
