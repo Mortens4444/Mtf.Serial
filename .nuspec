@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Mtf.Serial</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <description>
       Serial Port Devices.
       
@@ -24,7 +24,7 @@
     <copyright>Copyright © 2024</copyright>
 	<license type="expression">MIT</license>
 	<projectUrl>https://github.com/Mortens4444/Mtf.Serial</projectUrl>
-    <repository type="git" url="https://github.com/Mortens4444/Mtf.Serial.git" branch="main" commit="d189ada52092de78f808573a41c5f725de9cdfd3" />
+    <repository type="git" url="https://github.com/Mortens4444/Mtf.Serial.git" branch="main" commit="b1fe94b410640f227e9608fd525493de5ffc23c6" />
 	<tags>LuminaryMicroIcdiComPort ConradRelayCard SltWatchdog CarTft StretchUart Pelco KBD300A</tags>
 	<readme>docs\ReadMe.md</readme>
     <dependencies>

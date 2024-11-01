@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mtf.Serial\Mtf.Serial.csproj" />
+    <PackageReference Include="Mtf.Serial" Version="1.0.2" />
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

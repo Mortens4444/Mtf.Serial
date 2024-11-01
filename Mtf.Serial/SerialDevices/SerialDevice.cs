@@ -89,7 +89,7 @@ namespace Mtf.Serial.SerialDevices
 
         }
 
-        public void Connect(bool subscribeToDefaultEvents)
+        public void Connect(bool subscribeToDefaultEvents = true)
         {
             lock (connectionLock)
             {
