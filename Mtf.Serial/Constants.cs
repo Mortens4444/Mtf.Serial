@@ -13,9 +13,5 @@
         public const byte CarriageReturn = (byte)'\r';
 
         public const byte LineFeed = (byte)'\n';
-
-        public const string Localhost = "localhost";
-
-        public const string Star = "*";
     }
 }

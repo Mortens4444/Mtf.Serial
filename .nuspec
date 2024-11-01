@@ -25,7 +25,7 @@
 	<license type="expression">MIT</license>
 	<projectUrl>https://github.com/Mortens4444/Mtf.Serial</projectUrl>
     <repository type="git" url="https://github.com/Mortens4444/Mtf.Serial.git" branch="main" commit="00000000000000000000000000000000000000" />
-	<tags>LuminaryMicroIcdiComPort ConradRelayCard SltWatchdog CarTft StretchUart Pelco</tags>
+	<tags>LuminaryMicroIcdiComPort ConradRelayCard SltWatchdog CarTft StretchUart Pelco KBD300A</tags>
 	<readme>docs\ReadMe.md</readme>
     <dependencies>
       <group targetFramework="net481" />
@@ -34,9 +34,9 @@
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Mtf.Controls\bin\Release\net481\**" target="lib\net481" />
-    <file src=".\Mtf.Controls\bin\Release\net8.0-windows\**" target="lib\net8.0-windows7" />
-    <file src=".\Mtf.Controls\bin\Release\net9.0-windows\**" target="lib\net9.0-windows7" />
+    <file src=".\Mtf.Serial\bin\Release\net481\**" target="lib\net481" />
+    <file src=".\Mtf.Serial\bin\Release\net8.0-windows\**" target="lib\net8.0-windows7" />
+    <file src=".\Mtf.Serial\bin\Release\net9.0-windows\**" target="lib\net9.0-windows7" />
 	<file src=".\ReadMe.md" target="docs\" />
   </files>
 </package>

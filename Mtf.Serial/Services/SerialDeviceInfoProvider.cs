@@ -1,8 +1,8 @@
 ﻿using Mtf.Serial.Models;
-using Mtf.Serial.SerialDevices;
+using Mtf.WmiHelper;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mtf.Serial.Services
 {
