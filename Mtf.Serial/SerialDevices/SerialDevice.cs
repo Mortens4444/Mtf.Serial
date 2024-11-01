@@ -71,8 +71,20 @@ namespace Mtf.Serial.SerialDevices
             Disconnect();
             if (disposing)
             {
+                DisposeManagedResources();
                 comPort.Dispose();
             }
+            DisposeUnmanagedResources();
+        }
+
+        protected virtual void DisposeManagedResources()
+        {
+
+        }
+
+        protected virtual void DisposeUnmanagedResources()
+        {
+
         }
 
         public void Connect(bool subscribeToDefaultEvents)
