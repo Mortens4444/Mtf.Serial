@@ -207,9 +207,21 @@ namespace Mtf.Serial.SerialDevices
             return WriteAsync(bytes, Constants.DefaultBufferStartIndex, bytes.Length);
         }
 
+        public void Write(byte[] buffer)
+        {
+            ValidateBuffer(buffer);
+            comPort.Write(buffer, Constants.DefaultBufferStartIndex, buffer.Length);
+        }
+
         public void Write(byte[] buffer, int offset, int count)
         {
             comPort.Write(buffer, offset, count);
+        }
+
+        public Task WriteAsync(byte[] buffer)
+        {
+            ValidateBuffer(buffer);
+            return comPort.BaseStream.WriteAsync(buffer, Constants.DefaultBufferStartIndex, buffer.Length);
         }
 
         public Task WriteAsync(byte[] buffer, int offset, int count)
@@ -247,6 +259,14 @@ namespace Mtf.Serial.SerialDevices
         {
             ErrorReceived?.Invoke(this, e);
             logErrorAction(Logger, this, e, null);
+        }
+
+        private static void ValidateBuffer(byte[] buffer)
+        {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
         }
 
         private static void ValidateEncoding(Encoding encoding)
