@@ -164,7 +164,11 @@ namespace Mtf.Serial.Services
             var parameters = new List<int>();
             while (position < chars.Length)
             {
-                if (chars[position] == ';') position++;
+                if (chars[position] == ';')
+                {
+                    position++;
+                }
+
                 parameters.Add(ParseNumber(chars, ref position));
             }
             return parameters.ToArray();

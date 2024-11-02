@@ -8,7 +8,7 @@ namespace Mtf.Serial.SerialDevices
 {
     public class PelcoKbd300A : SerialDevice
     {
-        public PelcoKbd300A(string portName)
+        public PelcoKbd300A(string portName = "")
             : base(portName, parity: Parity.Odd)
         {
             Encoding = Encoding.ASCII;
@@ -45,8 +45,8 @@ namespace Mtf.Serial.SerialDevices
 
         private static int FindCommandIndex(string message)
         {
-            var aIndex = message.IndexOf("a");
-            var mIndex = message.IndexOf("m");
+            var aIndex = message.IndexOf('a');
+            var mIndex = message.IndexOf('m');
             return Math.Min(aIndex != -1 ? aIndex : int.MaxValue, mIndex != -1 ? mIndex : int.MaxValue);
         }
 

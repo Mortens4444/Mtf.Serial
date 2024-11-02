@@ -1,10 +1,8 @@
-﻿using System.Text;
-
-namespace Mtf.Serial.SerialDevices
+﻿namespace Mtf.Serial.SerialDevices
 {
     public class SltWatchdog : SerialDevice
     {
-        public SltWatchdog(string portName)
+        public SltWatchdog(string portName = "")
             : base(portName)
         {
             AppendCarriageReturn = true;

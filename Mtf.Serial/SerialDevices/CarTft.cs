@@ -23,8 +23,9 @@ namespace Mtf.Serial.SerialDevices
         public const string Manufacturer = "FF430D0043";
         public const string DeviceInformation = "FF430F0043";
         public const string Stop = "FF739B0573";
+        private static readonly string[] separator = new[] { "3F" };
 
-        public CarTft(string portName)
+        public CarTft(string portName = "")
             : base(portName, 38400, dataTerminalReady: true)
         {
             Encoding = Encoding.ASCII;
@@ -93,7 +94,11 @@ namespace Mtf.Serial.SerialDevices
 
         public static string ConvertHexToAscii(string hex)
         {
-            var parts = hex.Split(new[] { "3F" }, StringSplitOptions.RemoveEmptyEntries);
+            if (String.IsNullOrEmpty(hex))
+            {
+                return String.Empty;
+            }
+            var parts = hex.Split(separator, StringSplitOptions.RemoveEmptyEntries);
             var result = new StringBuilder();
 
             foreach (var part in parts)

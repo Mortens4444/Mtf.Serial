@@ -47,13 +47,13 @@ namespace Mtf.Serial.SerialDevices
 
         public bool AppendLineFeed { get; set; }
 
+        public int BytesToRead => comPort.IsOpen ? comPort.BytesToRead : 0;
+
         public Encoding Encoding { get; set; } = Encoding.UTF8;
 
         public ILogger Logger { get; set; }
 
         public string PortName { get; private set; }
-
-        public int BytesToRead => comPort.IsOpen ? comPort.BytesToRead : 0;
 
         ~SerialDevice()
         {

@@ -2,21 +2,19 @@
 
 ## Overview
 
-The `Mtf.Serial` library provides a `SerialDevice` class designed for serial communication, including features for connecting to and configuring serial ports, handling data reception, and managing errors. This document covers the installation, properties, methods, events, and usage examples for effective serial communication in .NET applications.
+The `Mtf.Serial` library offers a `SerialDevice` class designed for robust serial communication with configuration options for port parameters, enhanced data reception handling, and logging integration using `ILogger`. The library provides both synchronous and asynchronous methods for data handling, connection management, and error tracking, making it well-suited for .NET applications requiring reliable serial communications.
 
 ## Installation
 
-To install the `Mtf.Serial` package, use the following steps:
-
-1. **Add Package**:
-   Open the terminal in your project directory and run:
+1. **Install the Package**:
+   Run the following command in your project directory:
 
    ```bash
    dotnet add package Mtf.Serial
    ```
 
-2. **Include the Namespace**:
-   Add the `Mtf.Serial` namespace at the beginning of your code file:
+2. **Add the Namespace**:
+   Include the `Mtf.Serial` namespace in your code file:
 
    ```csharp
    using Mtf.Serial;
@@ -24,16 +22,16 @@ To install the `Mtf.Serial` package, use the following steps:
 
 ## Class: SerialDevice
 
-The `SerialDevice` class facilitates serial communication with configurations for port name, baud rate, and data handling. This class also includes events to monitor data and errors and provides both synchronous and asynchronous methods for data reading and writing.
+The `SerialDevice` class simplifies serial port communication and configuration, with customizable settings for port name, baud rate, encoding, and connection settings. Logging actions are included to assist with error and debug tracking.
 
 ### Constructor
 
-**`SerialDevice(string portName = "", int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One, Handshake handshake = Handshake.None, bool dataTerminalReady = false, bool requestToSend = false)`**
+**`SerialDevice(string portName = "", int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One, Handshake handshake = Handshake.None, bool dataTerminalReady = false, bool requestToSend = false, bool discardNull = false)`**
 
 - **Parameters**:
   - `portName`: The serial port name (e.g., "COM1"). Defaults to the first available port if unspecified.
   - `baudRate`: Communication speed. Default is 9600.
-  - `parity`, `dataBits`, `stopBits`, `handshake`, `dataTerminalReady`, and `requestToSend`: Optional settings to configure communication behavior.
+  - Additional parameters configure parity, data bits, stop bits, handshake, DTR/RTS, and null discarding options.
 
 ### Properties
 
@@ -44,43 +42,57 @@ The `SerialDevice` class facilitates serial communication with configurations fo
 | `Encoding`          | `Encoding`  | Defines the character encoding for messages (default is `UTF-8`).                    |
 | `Logger`            | `ILogger`   | An `ILogger` instance for logging serial events and errors.                          |
 | `PortName`          | `string`    | The name of the connected serial port.                                               |
+| `BytesToRead`       | `int`       | Number of bytes available to read from the buffer.                                   |
 
 ### Methods
 
 #### Connection Management
 
-- **`void Connect(bool subscribeToDefaultEvents)`**  
+- **`void Connect(bool subscribeToDefaultEvents = true)`**  
   Connects to the serial port. If `subscribeToDefaultEvents` is `true`, it subscribes to default data and error event handlers.
 
 - **`void Disconnect()`**  
   Disconnects from the serial port and unsubscribes from event handlers.
 
+- **`Dispose()`**  
+  Releases all resources used by `SerialDevice` and disconnects if connected. The destructor also invokes cleanup to ensure proper disposal.
+
 #### Data Transmission
 
 - **`string Read()`**  
-  Reads available data from the port as a string.
+  Reads available data from the port as a string, using the set encoding.
 
 - **`string Read(Encoding encoding)`**  
-  Reads data using the specified encoding.
+  Reads data with the specified encoding.
 
 - **`int Read(byte[] buffer)`**  
   Reads data into a byte array and returns the number of bytes read.
 
+- **`void Write(byte[] buffer)`**  
+  Writes a byte array to the serial port without any modifications.
+
+- **`void WriteAsync(byte[] buffer)`**  
+  Asynchronously writes a byte array to the serial port without any modifications.
+
+- **`void Write(byte[] buffer, int offset, int count)`**  
+  Writes a specified number of bytes from the byte array, starting at the given offset, to the serial port without any modifications.
+
+- **`void WriteAsync(byte[] buffer, int offset, int count)`**  
+  Asynchronously writes a specified number of bytes from the byte array, starting at the given offset, to the serial port without any modifications.
+
 - **`void Write(string message)`**  
-  Writes a string message to the serial port.
+  Writes a string message to the serial port using the specified encoding. If `AppendCarriageReturn` or `AppendLineFeed` is set, it will modify the sent bytes accordingly."
 
 - **`Task WriteAsync(string message)`**  
-  Writes a message asynchronously to the serial port.
+  Writes a message asynchronously to the serial port. If `AppendCarriageReturn` or `AppendLineFeed` is set, it will modify the sent bytes accordingly."
 
 - **`void Write(string message, Encoding encoding)`**  
-  Writes a string message with specified encoding.
+  Writes a string message with specified encoding. If `AppendCarriageReturn` or `AppendLineFeed` is set, it will modify the sent bytes accordingly."
 
 - **`Task WriteAsync(string message, Encoding encoding)`**  
-  Writes a message asynchronously with specified encoding.
+  Writes a message asynchronously with specified encoding. If `AppendCarriageReturn` or `AppendLineFeed` is set, it will modify the sent bytes accordingly."
 
 #### Event Handling
-
-The following events enable you to monitor serial communication:
 
 | Event             | Description                                               |
 |-------------------|-----------------------------------------------------------|
@@ -88,11 +100,17 @@ The following events enable you to monitor serial communication:
 | `DataReceived`    | Triggered when processed data is available.               |
 | `ErrorReceived`   | Triggered when an error occurs during serial communication.|
 
+### Logging
+
+The `SerialDevice` class supports logging through an `ILogger` instance:
+- **Error Logging**: Logs errors during communication with `logErrorAction`.
+- **Debug Logging**: Logs debug messages for connection and data events using `logDebugAction`.
+
 ### Example Usage
 
 ```csharp
 using Mtf.Serial;
-using System;
+using Microsoft.Extensions.Logging;
 using System.Text;
 
 public class SerialCommunicationExample
@@ -100,7 +118,10 @@ public class SerialCommunicationExample
     public void Example()
     {
         // Initialize SerialDevice with default settings
-        var serialDevice = new SerialDevice("COM3", 9600);
+        var serialDevice = new SerialDevice("COM3", 9600)
+        {
+            Logger = new ConsoleLogger<SerialDevice>()
+        };
 
         // Subscribe to events
         serialDevice.RawDataReceived += (sender, args) =>
@@ -132,5 +153,6 @@ public class SerialCommunicationExample
 
 ### Notes
 
-- Ensure exception handling for port access and communication errors.
-- Use the `Logger` property to capture and log serial events for debugging and monitoring purposes.
+- **Logging**: Use the `Logger` property to capture and log serial events for monitoring.
+- **Thread Safety**: The `SerialDevice` class ensures thread safety with a connection lock.
+- **Error Handling**: Ensure exception handling for port access errors and communication issues.

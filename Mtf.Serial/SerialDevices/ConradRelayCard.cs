@@ -9,7 +9,7 @@ namespace Mtf.Serial.SerialDevices
     /// </summary>
     public class ConradRelayCard : SerialDevice
     {
-        public ConradRelayCard(string portName)
+        public ConradRelayCard(string portName = "")
             : base(portName, 19200)
         {
             AppendLineFeed = true;

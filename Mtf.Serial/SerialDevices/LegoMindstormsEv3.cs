@@ -18,7 +18,7 @@ namespace Mtf.Serial.SerialDevices
 
         public OutputPort BothMotor => LeftMotor | RightMotor;
 
-        public LegoMindstormsEv3(string portName)
+        public LegoMindstormsEv3(string portName = "")
             : base(portName, 115200)
         {
         }
