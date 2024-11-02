@@ -1,10 +1,13 @@
 ﻿using Mtf.Serial.Models.Lego;
 using System;
+using System.Threading;
 
 namespace Mtf.Serial.SerialDevices
 {
     public class LegoMindstormsEv3 : SerialDevice
     {
+        private const int syncWaitAfterConnectInMs = 5000;
+        private const int syncWaitAfterDisconnectInMs = 30000;
         private static short messageConter = 1;
 
         public DaisyChainLayer DaisyChainLayer { get; set; } = DaisyChainLayer.EV3;
@@ -35,6 +38,22 @@ namespace Mtf.Serial.SerialDevices
         {
             StartMotor(RightMotor, speed, motorType);
             StartMotor(LeftMotor, -speed, motorType);
+        }
+
+        public new void Connect(bool subscribeToDefaultEvents = true)
+        {
+            base.Connect(subscribeToDefaultEvents);
+            LogDebug($"{PortName} sync wait {syncWaitAfterConnectInMs} ms after connect...");
+            Thread.Sleep(syncWaitAfterConnectInMs);
+            LogDebug($"{PortName} sync wait over...");
+        }
+
+        public new void Disconnect()
+        {
+            base.Disconnect();
+            LogDebug($"{PortName} sync wait {syncWaitAfterDisconnectInMs} ms after disconnect...");
+            Thread.Sleep(syncWaitAfterDisconnectInMs);
+            LogDebug($"{PortName} sync wait over...");
         }
 
         public void Stop()

@@ -14,12 +14,13 @@ namespace Mtf.Serial.SerialDevices
         private int threadSafeDisposing;
         private readonly object connectionLock = new object();
         private readonly Action<ILogger, SerialDevice, SerialErrorReceivedEventArgs, Exception> logErrorAction;
+        private readonly Action<ILogger, SerialDevice, string, Exception> logDebugAction;
 
         public event EventHandler<RawDataReceicedEventArgs> RawDataReceived;
         public event EventHandler<DataReceicedEventArgs> DataReceived;
         public event EventHandler<SerialErrorReceivedEventArgs> ErrorReceived;
 
-        public SerialDevice(string portName = "", int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One, Handshake handshake = Handshake.None, bool dataTerminalReady = false, bool requestToSend = false)
+        public SerialDevice(string portName = "", int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One, Handshake handshake = Handshake.None, bool dataTerminalReady = false, bool requestToSend = false, bool discardNull = false)
         {
             if (String.IsNullOrEmpty(portName))
             {
@@ -34,10 +35,12 @@ namespace Mtf.Serial.SerialDevices
                 ReadTimeout = Constants.ReadWriteTimeout,
                 WriteTimeout = Constants.ReadWriteTimeout,
                 DtrEnable = dataTerminalReady,
-                RtsEnable = requestToSend
+                RtsEnable = requestToSend,
+                DiscardNull = discardNull
             };
 
-            logErrorAction = LoggerMessage.Define<SerialDevice, SerialErrorReceivedEventArgs>(LogLevel.Error, new EventId(LogEventConstants.SerailErrorReceivedEventId, nameof(SerialDevice)), LogEventConstants.SerailErrorReceivedFormatMessage);
+            logErrorAction = LoggerMessage.Define<SerialDevice, SerialErrorReceivedEventArgs>(LogLevel.Error, new EventId(LogEventConstants.SerialErrorReceivedEventId, nameof(SerialDevice)), LogEventConstants.SerialErrorReceivedFormatMessage);
+            logDebugAction = LoggerMessage.Define<SerialDevice, string>(LogLevel.Debug, new EventId(LogEventConstants.SerialDebugReceivedEventId, nameof(SerialDevice)), LogEventConstants.SerialDebugReceivedFormatMessage);
         }
 
         public bool AppendCarriageReturn { get; set; }
@@ -70,7 +73,10 @@ namespace Mtf.Serial.SerialDevices
                 return;
             }
 
-            Disconnect();
+            if (comPort.IsOpen)
+            {
+                Disconnect();
+            }
             if (disposing)
             {
                 DisposeManagedResources();
@@ -93,14 +99,23 @@ namespace Mtf.Serial.SerialDevices
         {
             lock (connectionLock)
             {
+                LogDebug("Connecting...");
                 if (!comPort.IsOpen)
                 {
+                    LogDebug($"{PortName} is not open, trying to open it...");
                     if (subscribeToDefaultEvents)
                     {
+                        LogDebug("Subscribing to default events...");
                         comPort.DataReceived += ComPortDataReceived;
                         comPort.ErrorReceived += ComPortErrorReceived;
                     }
+                    LogDebug($"{PortName} opening...");
                     comPort.Open();
+                    LogDebug($"{PortName} opened...");
+                }
+                else
+                {
+                    LogDebug($"{PortName} is already opened");
                 }
             }
         }
@@ -109,13 +124,24 @@ namespace Mtf.Serial.SerialDevices
         {
             lock (connectionLock)
             {
+                LogDebug("Unsubscribing from default events...");
                 comPort.DataReceived -= ComPortDataReceived;
                 comPort.ErrorReceived -= ComPortErrorReceived;
                 if (comPort.IsOpen)
                 {
+                    LogDebug("BaseStream flush...");
+                    comPort.BaseStream.Flush();
+                    LogDebug("Discarding buffers...");
                     comPort.DiscardInBuffer();
                     comPort.DiscardOutBuffer();
+                    LogDebug($"{PortName} closing...");
                     comPort.Close();
+                    comPort.Close();
+                    LogDebug($"{PortName} closed...");
+                }
+                else
+                {
+                    logDebugAction(Logger, this, $"{PortName} is already closed", null);
                 }
             }
         }
@@ -258,7 +284,23 @@ namespace Mtf.Serial.SerialDevices
         protected virtual void OnErrorReceived(SerialErrorReceivedEventArgs e)
         {
             ErrorReceived?.Invoke(this, e);
-            logErrorAction(Logger, this, e, null);
+            LogError(e);
+        }
+
+        protected void LogError(SerialErrorReceivedEventArgs e)
+        {
+            if (Logger != null)
+            {
+                logErrorAction(Logger, this, e, null);
+            }
+        }
+
+        protected void LogDebug(string message)
+        {
+            if (Logger != null)
+            {
+                logDebugAction(Logger, this, message, null);
+            }
         }
 
         private static void ValidateBuffer(byte[] buffer)
