@@ -22,7 +22,7 @@
     <copyright>Copyright © 2024</copyright>
 	<license type="expression">MIT</license>
 	<projectUrl>https://github.com/Mortens4444/Mtf.Serial</projectUrl>
-    <repository type="git" url="https://github.com/Mortens4444/Mtf.Serial.git" branch="main" commit="579957ccd36d1efc296d947540157d008aa8bbd0" />
+    <repository type="git" url="https://github.com/Mortens4444/Mtf.Serial.git" branch="main" commit="192b9fca022d1dfd7108c3f6b1a32a5a24e1c483" />
 	<tags>LuminaryMicroIcdiComPort ConradRelayCard SltWatchdog CarTft StretchUart Pelco KBD300A</tags>
 	<readme>docs\ReadMe.md</readme>
     <dependencies>
