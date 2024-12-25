@@ -32,15 +32,20 @@ namespace Mtf.Serial.SerialDevices
             comPort = new SerialPort(portName, baudRate, parity, dataBits, stopBits)
             {
                 Handshake = handshake,
-                ReadTimeout = Constants.ReadWriteTimeout,
-                WriteTimeout = Constants.ReadWriteTimeout,
                 DtrEnable = dataTerminalReady,
                 RtsEnable = requestToSend,
                 DiscardNull = discardNull
             };
+            SetTimeout();
 
             logErrorAction = LoggerMessage.Define<SerialDevice, SerialErrorReceivedEventArgs>(LogLevel.Error, new EventId(LogEventConstants.SerialErrorReceivedEventId, nameof(SerialDevice)), LogEventConstants.SerialErrorReceivedFormatMessage);
             logDebugAction = LoggerMessage.Define<SerialDevice, string>(LogLevel.Debug, new EventId(LogEventConstants.SerialDebugReceivedEventId, nameof(SerialDevice)), LogEventConstants.SerialDebugReceivedFormatMessage);
+        }
+
+        public void SetTimeout(int timeout = Constants.ReadWriteTimeout)
+        {
+            comPort.ReadTimeout = timeout;
+            comPort.WriteTimeout = timeout;
         }
 
         public bool AppendCarriageReturn { get; set; }
@@ -146,6 +151,11 @@ namespace Mtf.Serial.SerialDevices
             }
         }
 
+        public void SetNewLine(string newLine)
+        {
+            comPort.NewLine = newLine;
+        }
+
         public string Read()
         {
             return Read(Encoding);
@@ -182,6 +192,22 @@ namespace Mtf.Serial.SerialDevices
                 OnRawDataReceived(new RawDataReceicedEventArgs { Data = result });
             }
             return readBytes;
+        }
+
+        public void WriteLine(string message)
+        {
+            comPort.WriteLine(message);
+        }
+
+        public string ReadLine()
+        {
+            return comPort.ReadLine();
+        }
+
+        public string WriteAndRead(string message)
+        {
+            Write(message, Encoding);
+            return Read();
         }
 
         public void Write(string message)
