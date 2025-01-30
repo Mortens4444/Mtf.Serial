@@ -47,7 +47,7 @@ namespace Mtf.Serial.SerialDevices
         {
             var aIndex = message.IndexOf('a');
             var mIndex = message.IndexOf('m');
-            return Math.Min(aIndex != -1 ? aIndex : int.MaxValue, mIndex != -1 ? mIndex : int.MaxValue);
+            return Math.Min(aIndex != -1 ? aIndex : Int32.MaxValue, mIndex != -1 ? mIndex : Int32.MaxValue);
         }
 
         private void SendCommand(string command, int value = 0, int limit = 64)
