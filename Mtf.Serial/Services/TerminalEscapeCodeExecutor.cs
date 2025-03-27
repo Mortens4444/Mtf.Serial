@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Extensions.Logging;
 using Mtf.Serial.Enums;
 
 namespace Mtf.Serial.Services
@@ -19,8 +20,11 @@ namespace Mtf.Serial.Services
 
                 var position = 2;
                 var primaryParam = ParseNumber(chars, ref position);
+#if NET462_OR_GREATER
                 var parameters = Array.Empty<int>();
-
+#else
+                var parameters = new int[] { };
+#endif
                 while (position < chars.Length)
                 {
                     var operation = chars[index + position++];
