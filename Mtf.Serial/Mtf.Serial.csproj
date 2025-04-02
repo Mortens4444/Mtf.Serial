@@ -11,17 +11,20 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <UseWindowsForms>true</UseWindowsForms>
     <WarningLevel>9999</WarningLevel>
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.2" />
-    <PackageReference Include="Mtf.Wmi" Version="1.0.10" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' != 'net452'">
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
-    <PackageReference Include="Mtf.Wmi" Version="1.0.10" />
     <PackageReference Include="System.IO.Ports" Version="9.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Mtf.Wmi" Version="1.0.10" />
+  </ItemGroup>
+  
 </Project>

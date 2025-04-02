@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Mtf.Serial</id>
-    <version>1.0.10</version>
+    <version>1.0.11</version>
     <description>
       Serial Port Devices.
       
@@ -10,9 +10,9 @@
       - LuminaryMicroIcdiComPort
       - ConradRelayCard
       - SltWatchdog
-	  - CarTft
-	  - StretchUart
-	  - Pelco KBD300A
+      - CarTft
+      - StretchUart
+      - Pelco KBD300A
       
       Compatibility:
       - .NET Framework 4.5.2
@@ -20,15 +20,15 @@
       - .NET Framework 4.8.1
       - .NET 8
       - .NET 9
-	</description>
+    </description>
     <authors>Mortens</authors>
-	<owners>Mortens</owners>
+    <owners>Mortens</owners>
     <copyright>Copyright © 2024</copyright>
-	<license type="expression">MIT</license>
-	<projectUrl>https://github.com/Mortens4444/Mtf.Serial</projectUrl>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Mortens4444/Mtf.Serial</projectUrl>
     <repository type="git" url="https://github.com/Mortens4444/Mtf.Serial.git" branch="main" commit="192b9fca022d1dfd7108c3f6b1a32a5a24e1c483" />
-	<tags>LuminaryMicroIcdiComPort ConradRelayCard SltWatchdog CarTft StretchUart Pelco KBD300A Mortens</tags>
-	<readme>docs\ReadMe.md</readme>
+    <tags>LuminaryMicroIcdiComPort ConradRelayCard SltWatchdog CarTft StretchUart Pelco KBD300A Mortens</tags>
+    <readme>docs\ReadMe.md</readme>
     <dependencies>
       <group targetFramework="net452">
         <dependency id="Mtf.Wmi" version="1.0.10" />

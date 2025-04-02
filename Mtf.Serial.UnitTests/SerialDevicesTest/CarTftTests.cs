@@ -1,8 +1,9 @@
 using Mtf.Serial.SerialDevices;
-using Mtf.Serial.Services;
+using NUnit.Framework;
 
 namespace Mtf.Serial.UnitTests.SerialDevicesTest
 {
+    [TestFixture]
     public class CarTftTests
     {
         [TestCase(103.9, "FF73A40573")]
