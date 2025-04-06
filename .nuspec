@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Mtf.Serial</id>
-    <version>1.0.11</version>
+    <version>1.0.13</version>
     <description>
       Serial Port Devices.
       
@@ -16,6 +16,7 @@
       
       Compatibility:
       - .NET Framework 4.5.2
+      - .NET Framework 4.6.2
       - .NET Framework 4.8
       - .NET Framework 4.8.1
       - .NET 8
@@ -31,27 +32,32 @@
     <readme>docs\ReadMe.md</readme>
     <dependencies>
       <group targetFramework="net452">
-        <dependency id="Mtf.Wmi" version="1.0.10" />
+        <dependency id="Mtf.Wmi" version="1.0.12" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.3" />
+        <dependency id="System.IO.Ports" version="9.0.3" />
+      </group>
+      <group targetFramework="net462">
+        <dependency id="Mtf.Wmi" version="1.0.12" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.3" />
         <dependency id="System.IO.Ports" version="9.0.3" />
       </group>
       <group targetFramework="net48">
-        <dependency id="Mtf.Wmi" version="1.0.10" />
+        <dependency id="Mtf.Wmi" version="1.0.12" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.3" />
         <dependency id="System.IO.Ports" version="9.0.3" />
       </group>
       <group targetFramework="net481">
-        <dependency id="Mtf.Wmi" version="1.0.10" />
+        <dependency id="Mtf.Wmi" version="1.0.12" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.3" />
         <dependency id="System.IO.Ports" version="9.0.3" />
       </group>
       <group targetFramework="net8.0-windows7">
-        <dependency id="Mtf.Wmi" version="1.0.10" />
+        <dependency id="Mtf.Wmi" version="1.0.12" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.3" />
         <dependency id="System.IO.Ports" version="9.0.3" />
       </group>
       <group targetFramework="net9.0-windows7">
-        <dependency id="Mtf.Wmi" version="1.0.10" />
+        <dependency id="Mtf.Wmi" version="1.0.12" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.3" />
         <dependency id="System.IO.Ports" version="9.0.3" />
       </group>
@@ -59,6 +65,7 @@
   </metadata>
   <files>
     <file src=".\Mtf.Serial\bin\Release\net452\**" target="lib\net452" />
+    <file src=".\Mtf.Serial\bin\Release\net462\**" target="lib\net462" />
     <file src=".\Mtf.Serial\bin\Release\net48\**" target="lib\net48" />
     <file src=".\Mtf.Serial\bin\Release\net481\**" target="lib\net481" />
     <file src=".\Mtf.Serial\bin\Release\net8.0-windows\**" target="lib\net8.0-windows7" />
