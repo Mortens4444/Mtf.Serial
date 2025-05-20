@@ -1,5 +1,5 @@
-﻿using Mtf.Serial.CustomEventArgs;
-using Mtf.Serial.Extensions;
+﻿using Mtf.Extensions;
+using Mtf.Serial.CustomEventArgs;
 using System;
 using System.IO.Ports;
 using System.Text;
@@ -12,15 +12,15 @@ namespace Mtf.Serial.SerialDevices
             : base(portName, parity: Parity.Odd)
         {
             Encoding = Encoding.ASCII;
-            DataReceived += DataReceiced;
         }
 
         public event EventHandler<CommandArrivedEventArgs> CommandArrived;
 
         private void OnCommandArrived(string command) => CommandArrived?.Invoke(this, new CommandArrivedEventArgs { Command = command });
-
-        private void DataReceiced(object sender, DataReceicedEventArgs e)
+        
+        protected override void OnDataReceived(DataReceivedEventArgs e)
         {
+            base.OnDataReceived(e);
             var messageBuffer = e.Data;
             if (messageBuffer.Contains("Exception"))
             {

@@ -2,7 +2,7 @@
 
 namespace Mtf.Serial.CustomEventArgs
 {
-    public class RawDataReceicedEventArgs : EventArgs
+    public class RawDataReceivedEventArgs : EventArgs
     {
         public byte[] Data { get; set; }
     }

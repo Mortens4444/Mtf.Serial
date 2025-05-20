@@ -2,7 +2,7 @@
 
 namespace Mtf.Serial.CustomEventArgs
 {
-    public class DataReceicedEventArgs : EventArgs
+    public class DataReceivedEventArgs : EventArgs
     {
         public string Data { get; set; }
     }

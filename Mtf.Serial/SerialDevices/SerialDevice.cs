@@ -16,8 +16,8 @@ namespace Mtf.Serial.SerialDevices
         private readonly Action<ILogger, SerialDevice, SerialErrorReceivedEventArgs, Exception> logErrorAction;
         private readonly Action<ILogger, SerialDevice, string, Exception> logDebugAction;
 
-        public event EventHandler<RawDataReceicedEventArgs> RawDataReceived;
-        public event EventHandler<DataReceicedEventArgs> DataReceived;
+        public event EventHandler<RawDataReceivedEventArgs> RawDataReceived;
+        public event EventHandler<DataReceivedEventArgs> DataReceived;
         public event EventHandler<SerialErrorReceivedEventArgs> ErrorReceived;
 
         public SerialDevice(string portName = "", int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One, Handshake handshake = Handshake.None, bool dataTerminalReady = false, bool requestToSend = false, bool discardNull = false)
@@ -174,7 +174,7 @@ namespace Mtf.Serial.SerialDevices
                 _ = resultBuilder.Append(encoding.GetString(buffer, Constants.DefaultBufferStartIndex, bytesRead));
             }
             var result = resultBuilder.ToString();
-            OnDataReceived(new DataReceicedEventArgs { Data = result });
+            OnDataReceived(new DataReceivedEventArgs { Data = result });
             return result;
         }
 
@@ -189,7 +189,7 @@ namespace Mtf.Serial.SerialDevices
             {
                 var result = new byte[readBytes];
                 Buffer.BlockCopy(buffer, Constants.DefaultBufferStartIndex, result, Constants.DefaultBufferStartIndex, readBytes);
-                OnRawDataReceived(new RawDataReceicedEventArgs { Data = result });
+                OnRawDataReceived(new RawDataReceivedEventArgs { Data = result });
             }
             return readBytes;
         }
@@ -303,9 +303,9 @@ namespace Mtf.Serial.SerialDevices
             _ = await Task.Run(() => _ = Read()).ConfigureAwait(false);
         }
 
-        protected virtual void OnRawDataReceived(RawDataReceicedEventArgs e) => RawDataReceived?.Invoke(this, e);
+        protected virtual void OnRawDataReceived(RawDataReceivedEventArgs e) => RawDataReceived?.Invoke(this, e);
 
-        protected virtual void OnDataReceived(DataReceicedEventArgs e) => DataReceived?.Invoke(this, e);
+        protected virtual void OnDataReceived(DataReceivedEventArgs e) => DataReceived?.Invoke(this, e);
 
         protected virtual void OnErrorReceived(SerialErrorReceivedEventArgs e)
         {
