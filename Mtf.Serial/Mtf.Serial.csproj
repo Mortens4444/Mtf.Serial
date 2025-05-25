@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.17</Version>
+    <Version>1.0.19</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <InformationalVersion>$(Version)</InformationalVersion>
@@ -59,8 +59,8 @@ The library includes various serial devices, such as:
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.5" />
     <PackageReference Include="System.IO.Ports" Version="9.0.5" />
-    <PackageReference Include="Mtf.Extensions" Version="1.0.5" />
-    <PackageReference Include="Mtf.Wmi" Version="1.0.18" />
+    <PackageReference Include="Mtf.Extensions" Version="1.0.11" />
+    <PackageReference Include="Mtf.Wmi" Version="1.0.20" />
   </ItemGroup>
   
 </Project>
